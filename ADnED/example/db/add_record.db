@@ -1,0 +1,220 @@
+record(longin, "BL18:Det:M3:SeqIDMissing_RBV")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn(M3,0,5)ADNED_SEQ_ID_MISSING")
+   field(SCAN, "I/O Intr")
+   field(LOLO, "-1")
+   field(HIHI, "1")
+   field(LLSV, "MAJOR")
+   field(HHSV, "MAJOR")
+   info(archive, "Monitor, 00:00:01, VAL")
+}
+
+# ///
+# /// This is the number of missing V4 packets, if any have been detected.
+# ///
+record(longin, "BL18:Det:M3:SeqIDNumMissing_RBV")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn(M3,0,5)ADNED_SEQ_ID_NUM_MISSING")
+   field(SCAN, "I/O Intr")
+   field(LOLO, "-1")
+   field(HIHI, "1")
+   field(LLSV, "MAJOR")
+   field(HHSV, "MAJOR")
+   info(archive, "Monitor, 00:00:01, VAL")
+}
+
+# ///
+# /// This is a flag to indicate I detected an out of order packet (with backwards timestamp).
+# ///
+record(bi, "BL18:Det:M3:BadTimeStamp_RBV")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn(M3,0,5)ADNED_BAD_TIMESTAMP")
+   field(SCAN, "I/O Intr")
+   field(ZNAM, "Ok")
+   field(ONAM, "Error")
+   field(ZSV, "NO_ALARM")
+   field(OSV, "MAJOR")
+   info(archive, "Monitor, 00:00:01, VAL")
+}
+
+
+## // file storage \\ ##
+
+
+#record(waveform, "BL18:Det:M3:HdfFullFileName")
+#{
+ #   field(PINI, "YES")
+  # field(INP,  "@asyn(M3,0,5)ADNED_HDF_FULL_FILE_NAME")
+   # field(FTVL, "CHAR")
+    #field(NELM, "256")
+    #info(autosaveFields, "VAL")
+#}
+
+record(stringin, "BL18:Det:M3:HdfFullFileName")
+{
+    field(DTYP, "asynOctetRead")
+    #field(DTYP, "asynOctetWrite")
+    field(INP,  "@asyn(M3,0,5)ADNED_HDF_FULL_FILE_NAME")
+    field(SCAN, "I/O Intr")
+}
+
+
+
+record(mbbo, "BL18:Det:M3:HdfFileWriteMode")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn(M3,0,5)ADNED_HDF_WRITE_MODE")
+    field(VAL,  "0")
+    field(ZRST, "Single")
+    field(ZRVL, "0")
+    field(ONST, "Capture")
+    field(ONVL, "1")
+    field(TWST, "Stream")
+    field(TWVL, "2")
+    info(autosaveFields, "VAL")
+}
+
+
+record(waveform, "BL18:Det:M3:HdfFileTemplate")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynOctetWrite")
+    field(INP,  "@asyn(M3,0,5)ADNED_HDF_FILE_TEMPLATE")
+    field(FTVL, "CHAR")
+    field(NELM, "256")
+    info(autosaveFields, "VAL")
+}
+
+
+record(longin, "BL18:Det:M3:SingleHdfFileNumber")
+{
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn(M3,0,5)ADNED_SINGLE_HDF_FILE_NUMBER")
+   field(SCAN, "I/O Intr")
+}
+
+record(longin, "BL18:Det:M3:CaptureHdfFileNumber")
+{
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn(M3,0,5)ADNED_CAPTURE_HDF_FILE_NUMBER")
+   field(SCAN, "I/O Intr")
+}
+
+record(longout, "BL18:Det:M3:hdfNumPulsePerFile")
+{
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn(M3,0,5)ADNED_HDF_NUM_PULSE_PER_FILE")
+   field(VAL, "45000")
+   field(PINI, "YES")
+   info(autosaveFields, "VAL")
+   field(ASG, "BEAMLINE")
+}
+
+
+
+# File path.
+record(waveform, "BL18:Det:M3:HdfFilePath")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynOctetWrite")
+    field(INP,  "@asyn(M3,0,5)ADNED_HDF_FILE_PATH")
+    field(FTVL, "CHAR")
+    field(NELM, "256")
+    info(autosaveFields, "VAL")
+}
+
+#pause nexus data storage process
+
+record(bo, "BL18:Det:M3:hdfPause")
+{
+    field(DTYP,"asynInt32")
+    field(OUT, "@asyn(M3,0,5)ADNED_HDF_PAUSE")
+    field(ZNAM,"Not Paused")  
+    field(ONAM,"Paused")
+    field(OSV, "MINOR")
+    info(archive, "Monitor, 00:00:01, VAL")
+}
+
+record(waveform, "BL18:Det:M3:hdfStatusMessage_RBV")
+{
+    field(DTYP, "asynOctetRead")
+    field(INP,  "@asyn(M3,0,5)ADNED_HDF_STATUS_MESSAGE")
+    field(FTVL, "CHAR")
+    field(NELM, "256")
+    field(SCAN, "I/O Intr")
+}
+
+
+##IOC CPU states
+
+record(ai, "ioc:IOC_CPU_LOAD") {
+  alias("ioc:LOAD")
+  field(DESC, "IOC CPU Load")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "IOC stats")
+  field(INP, "@ioc_cpuload")
+  field(EGU, "%")
+  field(PREC, "1")
+  field(HOPR, "100")
+  field(HIHI, "80")
+  field(HIGH, "70")
+  field(HHSV, "MAJOR")
+  field(HSV, "MINOR")
+  info(autosaveFields_pass0, "HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV")
+}
+
+
+record(ai, "ioc:SYS_CPU_LOAD") {
+  field(DESC, "System CPU Load")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "IOC stats")
+  field(INP, "@sys_cpuload")
+  field(EGU, "%")
+  field(PREC, "1")
+  field(HOPR, "100")
+  field(HIHI, "80")
+  field(HIGH, "70")
+  field(HHSV, "MAJOR")
+  field(HSV, "MINOR")
+  info(autosaveFields_pass0, "HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV")
+}
+
+
+record(ai, "ioc:CPU_CNT") {
+  field(DESC, "Number of CPUs")
+  field(DTYP, "IOC stats")
+  field(INP, "@no_of_cpus")
+  field(PINI, "YES")
+}
+
+
+
+record(ai, "ioc:CA_CONN_CNT") {
+  field(DESC, "Number of CA Connections")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "IOC stats")
+  field(INP, "@ca_connections")
+  field(HOPR, "5000")
+  field(HIHI, "4500")
+  field(HIGH, "4000")
+  field(HHSV, "MAJOR")
+  field(HSV, "MINOR")
+  info(autosaveFields_pass0, "HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV")
+}
+
+record(sub, "ioc:SYSRESET")
+{
+    alias("ioc:SysReset")
+    field(DESC, "IOC Restart" )
+    field(SNAM, "rebootProc")
+    field(BRSV,"INVALID")
+    field(L,"1")
+}
+
